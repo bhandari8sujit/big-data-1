@@ -1,0 +1,39 @@
+movies.tsv:
+
+tconst – (string) alphanumeric unique identifier of the movie title
+title – original title of the movie
+releaseYear – in YYYY format, represents the release year of a movie
+genres – (string array) includes up to three genres associated with the movie
+
+
+
+
+names.tsv:
+
+nconst – (string) alphanumeric unique identifier of the name/person
+primaryName – name by which the person is most often credited
+birthYear – in YYYY format
+deathYear – in YYYY format if applicable, else '\N'
+
+
+
+
+
+roles.tsv:
+
+tconst – (string) alphanumeric unique identifier of the movie title
+ordering – a number to uniquely identify rows for a given title
+nconst – (string) alphanumeric unique identifier of the name/person
+category – the category of role that person was involved in a movie
+
+
+
+
+Program1:
+
+Director-name(roles.nconst), Movie-title(movies.title), Year-released(movies.releaseYear)
+
+
+
+Program2:
+Person-name(names.nconst), Movie-title(movies-title)

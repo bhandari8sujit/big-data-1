@@ -1,27 +1,25 @@
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.RawComparator;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Partitioner;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
-import org.apache.hadoop.util.*;
+import common.io.TextPair;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;  
 
 public class Program1JobRunner extends Configured implements Tool{
 	
 	public static final String DATA_SEPERATOR = "	";
 	
 	public static class KeyPartitioner extends Partitioner <TextPair, Text>{
-
+		@Override
+		public int getPartition(TextPair arg0, Text arg1, int arg2) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	}
 	
 	public int run(String[] args) throws Exception  {		
@@ -31,7 +29,7 @@ public class Program1JobRunner extends Configured implements Tool{
             // example: hadoop jar ./maxt.jar MaxTemperatureJobRunner /input /output
 			System.exit(-1);
 		}		
-
+		
 		Job job = new Job(getConf());
 				
 		job.setJarByClass(getClass());
@@ -47,18 +45,14 @@ public class Program1JobRunner extends Configured implements Tool{
 		FileOutputFormat.setOutputPath(job, outputPath);
 		
 		job.setPartitionerClass(KeyPartitioner.class);
+		//TODO
+		// job.setGroupingComparatorClass(TextPair.FirstComparator.class);/*]*/
 		
-		job.setMapOutputKeyClass(IntWritable.class);
-
-		job.setMapOutputValueClass(Text.class);
-
-		job.setOutputKeyClass(IntWritable.class);
-
-		job.setOutputValueClass(Text.class);
-
-		job.setMapperClass(MoviesMapper.class);
-		
+		job.setMapOutputKeyClass(TextPair.class);
+		    
 		job.setReducerClass(MoviesReducer.class);
+
+		job.setOutputKeyClass(Text.class);
 		
 		System.exit(job.waitForCompletion(true) ? 0:1); 	
 		
@@ -69,7 +63,7 @@ public class Program1JobRunner extends Configured implements Tool{
 	}
 
 	public static void main(String[] args) throws Exception {
-		Program1JobRunner driver = new Program1JobRunner();
-		driver.run(args);
+		int exitCode = ToolRunner.run(new Program1JobRunner(), args);
+	    System.exit(exitCode);
 	}
 }
