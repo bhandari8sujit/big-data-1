@@ -12,13 +12,12 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 public class Program1JobRunner extends Configured implements Tool{
 	
-	public static final String DATA_SEPERATOR = "	";
+//	public static final String DATA_SEPERATOR = "	";
 	
 	public static class KeyPartitioner extends Partitioner <TextPair, Text>{
 		@Override
-		public int getPartition(TextPair arg0, Text arg1, int arg2) {
-			// TODO Auto-generated method stub
-			return 0;
+		public int getPartition(/*[*/TextPair key/*]*/, Text value, int numPartitions) {
+		      return (/*[*/key.getFirst().hashCode()/*]*/ & Integer.MAX_VALUE) % numPartitions;
 		}
 	}
 	
@@ -46,7 +45,7 @@ public class Program1JobRunner extends Configured implements Tool{
 		
 		job.setPartitionerClass(KeyPartitioner.class);
 		//TODO
-		// job.setGroupingComparatorClass(TextPair.FirstComparator.class);/*]*/
+		job.setGroupingComparatorClass(TextPair.FirstComparator.class);/*]*/
 		
 		job.setMapOutputKeyClass(TextPair.class);
 		    
@@ -67,3 +66,9 @@ public class Program1JobRunner extends Configured implements Tool{
 	    System.exit(exitCode);
 	}
 }
+
+/*
+SELECT * FROM table1 a
+JOIN table2 b ON a.ID = b.ID
+JOIN table3 c ON a.ID = c.ID
+*/
