@@ -10,10 +10,9 @@ public class RolesMapper extends Mapper<LongWritable, Text, TextPair, Text> {
 	@Override
 	protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
-		String onlyDirector = parser.getCategory().equals("director") ? "director": "";
-	  	//TODO
-		if (parser.parse(value)) {
-			context.write(new TextPair(parser.getnConst(), "1"), new Text(onlyDirector));	
+		// String onlyDirector = parser.getCategory().equals("director") ? "director": "";
+		if (parser.parse(value) && parser.getCategory().equals("director")) {
+			context.write(new TextPair(parser.getnConst(), "1"), new Text(parser.gettconst()));
 		}
 	}
 }
