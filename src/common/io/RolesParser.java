@@ -8,12 +8,12 @@ public class RolesParser {
 	private String nconst;
 	private String category;
 
-	public void parse(String record) {
+	protected void parse(String record) {
 
-		String[] item = record.split("	");
+		String[] item = record.split("\\\t");
 		tconst = item[0];
 		ordering = item[1];
-		nconst = item[2]
+		nconst = item[2];
 		category = item[3];
 	
 	}

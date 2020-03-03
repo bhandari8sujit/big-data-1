@@ -9,25 +9,19 @@ public class MoviesParser {
 	private String releaseYear;
 	private String genres;
 
-	public boolean parse(String record) {
+	protected void parse(String record) {
 
-	String[] item = record.split("	");
-	tconst = item[0];
-	title = item[1];
-	releaseYear = item[2];
-	genres = item[3];
-	
-		try {
-			// Integer.parseInt(releaseYear); // USAF identifiers are numeric	    
-			return true;
-		} catch (NumberFormatException e) {
-			return false;
-		}
+		String[] item = record.split("	");
+		tconst = item[0];
+		title = item[1];
+		releaseYear = item[2];
+		genres = item[3];
 	    
 	}
 	  
 	public boolean parse(Text record) {
-		return parse(record.toString());
+		parse(record.toString());
+		return true;
 	}
 	
 	public String gettconst() {

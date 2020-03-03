@@ -10,12 +10,23 @@ import org.apache.hadoop.util.ToolRunner;
 import common.io.TextPair;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;  
 
+public class Program1JobRunner extends Configured implements Tool{	
+	// public static final String DATA_SEPERATOR = "	";	
+	public static class KeyPartitioner extends Partitioner<TextPair, Text> {
+		@Override
+		public int getPartition(/*[*/TextPair key/*]*/, Text value, int numPartitions) {
+		  return (/*[*/key.getFirst().hashCode()/*]*/ & Integer.MAX_VALUE) % numPartitions;
+		}
+	}
+	
+	public int run(String[] args) throws Exception  {		
 
 		if(args.length !=3) {
 			System.err.println("Usage: Program1 Driver <input path> <outputpath>");
             // example: hadoop jar ./maxt.jar MaxTemperatureJobRunner /input /output
 			System.exit(-1);
 		}		
+		
 		Job job = new Job(getConf());
 				
 		job.setJarByClass(getClass());
@@ -56,9 +67,3 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 	}
 	
 }
-
-/*
-SELECT * FROM table1 a
-JOIN table2 b ON a.ID = b.ID
-JOIN table3 c ON a.ID = c.ID
-*/
