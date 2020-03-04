@@ -9,19 +9,19 @@ public class MoviesParser {
 	private String releaseYear;
 	private String genres;
 
-	protected void parse(String record) {
+	public boolean parseRecord(String record) {
 
 		String[] item = record.split("	");
 		tconst = item[0];
 		title = item[1];
 		releaseYear = item[2];
 		genres = item[3];
-	    
+		
+		return true;
 	}
 	  
-	public boolean parse(Text record) {
-		parse(record.toString());
-		return true;
+	public void parse(Text record) {
+		parseRecord(record.toString());		
 	}
 	
 	public String gettconst() {

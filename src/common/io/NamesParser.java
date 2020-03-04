@@ -9,8 +9,8 @@ public class NamesParser {
    private String deathYear;
 
    protected void parse(String record) {
-	   	String[] item = record.split("\\\t");		
-	   	nconst = item[0];
+	   String[] item = record.split("\\\t");		
+	   nconst = item[0];
 		primaryName = item[1];
 		birthYear= item[2];
 		deathYear = item[3];   

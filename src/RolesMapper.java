@@ -5,14 +5,16 @@ import common.io.RolesParser;
 import common.io.TextPair;
 
 public class RolesMapper extends Mapper<LongWritable, Text, TextPair, Text> {
+// public class RolesMapper extends Mapper<LongWritable, Text, Text, Text> {
 	private RolesParser parser = new RolesParser();
 
 	@Override
 	protected void map(LongWritable key, Text value, Context context)
       throws IOException, InterruptedException {
 		// String onlyDirector = parser.getCategory().equals("director") ? "director": "";
-		if (parser.getCategory().equals("director")) {
+		if (parser.getCategory().contains("director")) {
 			context.write(new TextPair(parser.getnConst(), "1"), new Text(parser.gettconst()));
+			// context.write(new Text (parser.getnConst()), new Text(parser.gettconst()+ "/" + "1" ));
 		}
 	}
 }

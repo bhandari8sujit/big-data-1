@@ -7,6 +7,7 @@ import common.io.TextPair;
 
 //vv JoinRecordMapper
 public class NamesMapper extends Mapper<LongWritable, Text, TextPair, Text> {
+// public class NamesMapper extends Mapper<LongWritable, Text, Text, Text> {
 	
 	private NamesParser parser = new NamesParser();
   
@@ -14,6 +15,7 @@ public class NamesMapper extends Mapper<LongWritable, Text, TextPair, Text> {
   protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 	  parser.parse(value);
     context.write(new TextPair(parser.getNconst(), "0"), new Text(parser.getPrimaryName())); 
+    // context.write(new Text(parser.getNconst()), new Text(parser.getPrimaryName() + "/" + "0" ));
   }
 
 }
