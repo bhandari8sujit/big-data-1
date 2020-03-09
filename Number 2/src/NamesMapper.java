@@ -14,8 +14,8 @@ import common.io.TextPair;
   @Override
   protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 	 parser.parse(value);
-//    context.write(new TextPair(parser.getNconst(), "0"), new Text(parser.getPrimaryName())); 
-     context.write(new Text(parser.getNconst()), new Text(parser.getPrimaryName() + "/" + "N" ));
+    // context.write(new TextPair(parser.getNconst(), "0"), new Text(parser.getPrimaryName())); 
+    context.write(new Text(parser.getNconst()), new Text(parser.getPrimaryName() + "/" + "N" ));
   }
 
 }

@@ -13,9 +13,11 @@ import common.io.TextPair;
       throws IOException, InterruptedException {
 		// String onlyDirector = parser.getCategory().equals("director") ? "director": "";
 		parser.parse(value);
-		if (parser.getCategory().contains("director")) {
-//			context.write(new TextPair(parser.getnConst(), "1"), new Text(parser.gettconst()));
-			 context.write(new Text (parser.getnConst()), new Text(parser.gettconst()+ "/" + "R" ));
+		boolean rowFillter = parser.getCategory().contains("director") || parser.getCategory().contains("actor") || parser.getCategory().contains("actress");
+		if (rowFillter) {
+			//context.write(new TextPair(parser.getnConst(), "1"), new Text(parser.gettconst()));
+			context.write(new Text (parser.getnConst()), new Text(parser.gettconst() + "/" + parser.getOrdering() + "/" + parser.getCategory() + "/" + "R" ));
+			
 		}
 	}
 }
